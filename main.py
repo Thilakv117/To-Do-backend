@@ -57,6 +57,17 @@ def create_user(addTask: TaskCreate, db: db_dependency):
         return response
     except Exception as e:
         return str(e)
+    
+@app.delete("/task/{id}")
+def task_delete(id:int, db: db_dependency):
+    try:
+        delete_task = db.query(model.Test).filter(model.Test.id == id).first()
+        db.delete(delete_task)
+        db.commit()
+        
+        return "Deleted successfuly"
+    except Exception as e:
+        return {"eMessage": str(e)}
 
     
 
